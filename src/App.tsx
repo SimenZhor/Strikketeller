@@ -7,6 +7,7 @@ import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { useTranslation } from 'react-i18next'
 import { LanguageToggle } from '@/components/LanguageToggle'
+import { ModeToggle } from '@/components/ModeToggle'
 
 const defaultState = {
   rounds: 0,
@@ -67,7 +68,7 @@ function App() {
 
         <div className="col-span-2 flex flex-col items-center justify-center gap-4">
           {/* Large button to increase the count */}
-          <Button variant="outline" className="rounded-full aspect-square w-full h-full"
+          <Button variant="default" className="rounded-full aspect-square w-full h-full"
             onClick={handleIncrement}>
             <ArrowUp className="size-[5rem]" />
           </Button>
@@ -106,8 +107,13 @@ function App() {
               {t('settings')}
             </AccordionTrigger>
             <AccordionContent>
-              <div className="flex flex-row gap-2 mb-2 justify-between items-center">
-                {t('language')}: <LanguageToggle />
+              <div className="flex flex-col gap-2 mb-2">
+                <div className="flex flex-row gap-2 justify-between items-center">
+                  {t('language')}: <LanguageToggle />
+                </div>
+                <div className="flex flex-row gap-2 justify-between items-center">
+                  {t('mode')}: <ModeToggle />
+                </div>
               </div>
             </AccordionContent>
           </AccordionItem>

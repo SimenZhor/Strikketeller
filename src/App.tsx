@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { useTranslation } from 'react-i18next'
+import { LanguageToggle } from '@/components/LanguageToggle'
 
 const defaultState = {
   rounds: 0,
@@ -13,6 +15,7 @@ const defaultState = {
 }
 
 function App() {
+  const { t } = useTranslation()
   const [state, setState] = useLocalStorage('strikketeller-state', defaultState)
 
   const { rounds, row, rowsPerRound } = state
@@ -55,11 +58,11 @@ function App() {
     <>
       <div className="grid grid-cols-4 gap-4 items-start justify-center">
         <div className="col-span-2">
-          <h1 className="text-2xl font-bold">Runde: {rounds + 1}</h1>
-          <h2 className="text-lg font-bold">Repetisjon: {(row % rowsPerRound) + 1}</h2>
-          <h2 className="text-lg font-bold">Rader: {row + 1}</h2>
-          <Label htmlFor="repetitions-per-round" className="text-sm font-medium">Antall repetisjoner per runde</Label>
-          <Input type="number" id="repetitions-per-round" placeholder="Repetisjoner per runde" value={rowsPerRound} onChange={(e) => setState((prev) => ({ ...prev, rowsPerRound: Number(e.target.value) }))} />
+          <h1 className="text-2xl font-bold">{t('round')}: {rounds + 1}</h1>
+          <h2 className="text-lg font-bold">{t('repetition')}: {(row % rowsPerRound) + 1}</h2>
+          <h2 className="text-lg font-bold">{t('rows')}: {row + 1}</h2>
+          <Label htmlFor="repetitions-per-round" className="text-sm font-medium">{t('repetitionsPerRound')}</Label>
+          <Input type="number" id="repetitions-per-round" placeholder={t('repetitionsPerRoundPlaceholder')} value={rowsPerRound} onChange={(e) => setState((prev) => ({ ...prev, rowsPerRound: Number(e.target.value) }))} />
         </div>
 
         <div className="col-span-2 flex flex-col items-center justify-center gap-4">
@@ -76,22 +79,36 @@ function App() {
           </Button>
         </div>
 
-        <Accordion type="single" collapsible className="col-span-4">
+        <Accordion type="multiple" collapsible className="col-span-4 mt-4">
+          
           <AccordionItem value="reset">
             <AccordionTrigger>
-              Nullstill
+              {t('reset')}
             </AccordionTrigger>
             <AccordionContent>
+              <div className="flex flex-col gap-2 mb-2">
 
-              {/* Reset button */}
-              <Button variant="outline" className="w-1/2"
+              {/* Reset buttons */}
+              <Button variant="outline" className="w-full"
                 onClick={resetCount}>
-                Nullstill teller <RotateCcw />
+                {t('resetCounter')} <RotateCcw />
               </Button>
-              <Button variant="outline" className="w-1/2"
+              <Button variant="outline" className="w-full"
                 onClick={handleReset}>
-                Nullstill alt <RotateCcw />
+                {t('resetAll')} <RotateCcw />
               </Button>
+                  </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="settings">
+            <AccordionTrigger>
+              {t('settings')}
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-row gap-2 mb-2 justify-between items-center">
+                {t('language')}: <LanguageToggle />
+              </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>

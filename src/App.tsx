@@ -80,7 +80,7 @@ function App() {
           </Button>
         </div>
 
-        <Accordion type="multiple" collapsible className="col-span-4 mt-4">
+        <Accordion type="single" collapsible className="col-span-4 mt-4">
           
           <AccordionItem value="reset">
             <AccordionTrigger>

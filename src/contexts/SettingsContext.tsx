@@ -1,12 +1,13 @@
 import { createContext, useContext, useMemo, useCallback, type ReactNode } from 'react'
 import { useLanguage, type Language } from '@/hooks/settings/useLanguage'
 import { useMode, type Mode } from '@/hooks/settings/useMode'
+import { useTheme, type Theme } from '@/hooks/settings/useTheme'
 
 export type Settings = {
   language: Language
   mode: Mode
+  theme: Theme
   // Future settings can be added here, e.g.:
-  // theme?: 'default' | 'high-contrast'
   // fontSize?: 'small' | 'medium' | 'large'
 }
 
@@ -20,23 +21,26 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useLanguage()
   const [mode, setMode] = useMode()
+  const [theme, setTheme] = useTheme()
 
   // Map of setting keys to their setters - eliminates need for switch statement
   const setters = useMemo(
     () =>
       ({
         language: setLanguage,
-        mode: setMode
+        mode: setMode,
+        theme: setTheme
       }) as Record<keyof Settings, (value: any) => void>,
-    [setLanguage, setMode]
+    [setLanguage, setMode, setTheme]
   )
 
   const settings = useMemo(
     () => ({
       language,
-      mode
+      mode,
+      theme
     }),
-    [language, mode]
+    [language, mode, theme]
   )
 
   const setSetting = useCallback(
@@ -70,4 +74,4 @@ export function useSettings() {
 }
 
 // Re-export types for convenience
-export type { Language, Mode }
+export type { Language, Mode, Theme }

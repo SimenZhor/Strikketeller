@@ -46,6 +46,18 @@ export const settingsRegistry: SettingConfig[] = [
       { value: 'en-US', label: 'English' }
     ],
     order: 2
+  },
+  {
+    type: 'dropdown',
+    key: 'theme',
+    options: [
+      { value: 'default', label: 'Default' },
+      { value: 'sunset', label: 'Sunset' },
+      { value: 'blue', label: 'Blue' },
+      { value: 'green', label: 'Green' },
+      { value: 'purple', label: 'Purple' }
+    ],
+    order: 3
   }
 ]
 
@@ -62,7 +74,7 @@ export function sortSettingsByOrder<T extends AbstractSettingConfig>(settings: T
 // Helper function to create onChange handler for a setting
 export function createSettingChangeHandler<K extends keyof Settings>(
   key: K,
-  setSetting: <K>(key: K, value: Settings[K]) => void
+  setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
 ): (value: Settings[K]) => void {
   return (value: Settings[K]) => setSetting(key, value)
 }

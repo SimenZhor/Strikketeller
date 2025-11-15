@@ -5,8 +5,7 @@ import { Label } from '@/components/ui/label'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { useTranslation } from 'react-i18next'
-import { LanguageToggle } from '@/components/LanguageToggle'
-import { ModeToggle } from '@/components/ModeToggle'
+import { SettingsItems } from './components/SettingsItem'
 
 const defaultState = {
   repetitions: 0,
@@ -105,14 +104,7 @@ function App() {
               {t('settings')}
             </AccordionTrigger>
             <AccordionContent>
-              <div className="flex flex-col gap-2 mb-2">
-                <div className="flex flex-row gap-2 justify-between items-center">
-                  {t('language')}: <LanguageToggle />
-                </div>
-                <div className="flex flex-row gap-2 justify-between items-center">
-                  {t('mode')}: <ModeToggle />
-                </div>
-              </div>
+              <SettingsItems />
             </AccordionContent>
           </AccordionItem>
         </Accordion>

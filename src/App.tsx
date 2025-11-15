@@ -65,13 +65,13 @@ function App() {
 
         <div className="col-span-2 flex flex-col items-center justify-center gap-4">
           {/* Large button to increase the count */}
-          <Button variant="default" className="rounded-full aspect-square w-full h-full"
+          <Button variant="default" className="rounded-full aspect-square w-full h-full transition-transform duration-100 ease-in-out active:scale-95"
             onClick={handleIncrement}>
             <ArrowUp className="size-[5rem]" />
           </Button>
 
           {/*  Small button to decrease the count */}
-          <Button variant="outline" className="rounded-full aspect-square w-1/3 h-1/3"
+          <Button variant="outline" className="rounded-full aspect-square w-1/3 h-1/3 transition-transform duration-100 ease-in-out active:scale-95"
             onClick={handleDecrement}>
             <ArrowDown className="size-[2.5rem]" />
           </Button>

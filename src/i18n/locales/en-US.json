@@ -1,9 +1,9 @@
 {
-  "round": "Round",
   "repetition": "Repetition",
-  "rows": "Total rows",
-  "repetitionsPerRound": "Repetitions per round",
-  "repetitionsPerRoundPlaceholder": "Repetitions per round",
+  "row": "Row",
+  "rows": "Rows (total)",
+  "rowsPerRepetition": "Rows per repetition",
+  "rowsPerRepetitionPlaceholder": "Rows per repetition",
   "reset": "Reset",
   "resetCounter": "Reset counter",
   "resetAll": "Reset all",

@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button'
-import './App.css'
 import { ArrowDown, ArrowUp, RotateCcw } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,39 +9,38 @@ import { LanguageToggle } from '@/components/LanguageToggle'
 import { ModeToggle } from '@/components/ModeToggle'
 
 const defaultState = {
-  rounds: 0,
-  row: 0,
-  rowsPerRound: 8
+  repetitions: 0,
+  rowsTot: 0,
+  rowsPerRepetition: 8
 }
 
 function App() {
   const { t } = useTranslation()
   const [state, setState] = useLocalStorage('strikketeller-state', defaultState)
 
-  const { rounds, row, rowsPerRound } = state
+  const { repetitions, rowsTot, rowsPerRepetition } = state
 
   const handleIncrement = () => {
     setState((prev) => {
-      const newRow = prev.row + 1
-      const shouldIncrementRound = newRow % prev.rowsPerRound === 0
+      const newRow = prev.rowsTot + 1
+      const shouldIncrementRepetition = newRow % prev.rowsPerRepetition === 0
 
       return {
         ...prev,
-        row: newRow,
-        rounds: shouldIncrementRound ? prev.rounds + 1 : prev.rounds
+        rowsTot: newRow,
+        repetitions: shouldIncrementRepetition ? prev.repetitions + 1 : prev.repetitions
       }
     })
   }
 
   const handleDecrement = () => {
     setState((prev) => {
-      const newRow = prev.row - 1
-      const shouldDecrementRound = newRow % prev.rowsPerRound === 0
+      const shouldDecrementRepetition = prev.rowsTot % prev.rowsPerRepetition === 0
 
       return {
         ...prev,
-        row: newRow,
-        rounds: shouldDecrementRound ? prev.rounds - 1 : prev.rounds
+        rowsTot: prev.rowsTot - 1,
+        repetitions: shouldDecrementRepetition ? prev.repetitions - 1 : prev.repetitions
       }
     })
   }
@@ -52,18 +50,18 @@ function App() {
   }
 
   const resetCount = () => {
-    setState((prev) => ({ ...prev, rounds: 0, row: 0 }))
+    setState((prev) => ({ ...prev, repetitions: 0, rowsTot: 0 }))
   }
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-4 items-start justify-center">
+      <div className="grid grid-cols-4 gap-4 items-start justify-start">
         <div className="col-span-2">
-          <h1 className="text-2xl font-bold">{t('round')}: {rounds + 1}</h1>
-          <h2 className="text-lg font-bold">{t('repetition')}: {(row % rowsPerRound) + 1}</h2>
-          <h2 className="text-lg font-bold">{t('rows')}: {row + 1}</h2>
-          <Label htmlFor="repetitions-per-round" className="text-sm font-medium">{t('repetitionsPerRound')}</Label>
-          <Input type="number" id="repetitions-per-round" placeholder={t('repetitionsPerRoundPlaceholder')} value={rowsPerRound} onChange={(e) => setState((prev) => ({ ...prev, rowsPerRound: Number(e.target.value) }))} />
+          <h1 className="text-2xl font-bold">{t('repetition')}: {repetitions + 1}</h1>
+          <h2 className="text-md font-bold">{t('row')}: {(rowsTot % rowsPerRepetition) + 1}/{rowsPerRepetition}</h2>
+          <h2 className="text-md font-bold">{t('rows')}: {rowsTot + 1}</h2>
+          <Label htmlFor="rows-per-repetition" className="text-sm font-medium">{t('rowsPerRepetition')}</Label>
+          <Input type="number" inputMode="numeric" id="rows-per-repetition" placeholder={t('rowsPerRepetitionPlaceholder')} value={rowsPerRepetition} onChange={(e) => setState((prev) => ({ ...prev, rowsPerRepetition: Number(e.target.value) }))} min={1} max={10000} step={1} />
         </div>
 
         <div className="col-span-2 flex flex-col items-center justify-center gap-4">
